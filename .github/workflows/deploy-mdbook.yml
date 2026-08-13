@@ -1,0 +1,60 @@
+# Deploy the CodeFuse-Query mdBook documentation to GitHub Pages.
+#
+# Triggers:
+#   - push to `main` that changes anything under `codefuse-mdbook/`
+#   - manual run from the Actions tab
+#
+# The built site is published with the official GitHub Pages actions
+# (actions/configure-pages + actions/upload-pages-artifact + actions/deploy-pages).
+# It therefore requires the repository's Pages source to be set to "GitHub Actions".
+# See: Settings -> Pages -> Build and deployment -> Source = "GitHub Actions".
+
+name: Deploy mdBook to Pages
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "codefuse-mdbook/**"
+      - ".github/workflows/deploy-mdbook.yml"
+  workflow_dispatch:
+
+# Grant the GITHUB_TOKEN the permissions required to deploy to GitHub Pages.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment, cancelling any in-progress run.
+# A distinct group name avoids colliding with the existing `pages` workflow.
+concurrency:
+  group: "mdbook-pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v2
+        with:
+          mdbook-version: "0.4.52"
+
+      - name: Build mdBook
+        run: mdbook build
+        working-directory: codefuse-mdbook
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: codefuse-mdbook/book
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

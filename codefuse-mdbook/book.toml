@@ -1,0 +1,14 @@
+[book]
+title = "CodeFuse-Query 深度指南"
+description = "CodeFuse-Query 入门级与进阶级文档，含千万行级 C/C++ 电信系统适用性评估"
+authors = ["CodeFuse-Query Analysis"]
+language = "zh"
+
+[build]
+build-dir = "book"
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/Atituiset/CodeFuse-Query"
+edit-url-template = "https://github.com/Atituiset/CodeFuse-Query/edit/main/{path}"

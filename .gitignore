@@ -45,3 +45,6 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+
+### mdBook build output ###
+codefuse-mdbook/book/
