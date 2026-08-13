@@ -26,3 +26,8 @@
 # 专项评估
 
 - [千万行级 C/C++ 电信系统适用性评估](./telecom/applicability.md)
+
+# LLM 代码审核集成
+
+- [第 16 章 与 mcp-language-server 的结合](./llm/16-integration.md)
+- [第 17 章 结合落地路线与验证](./llm/17-roadmap.md)
