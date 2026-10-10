@@ -1,4 +1,6 @@
 # CodeFuse-Query: A Data-Centric Static Code Analysis System
+
+> 📖 中文深度指南（本 fork 自建，GitHub Pages）：<https://atituiset.github.io/CodeFuse-Query/>
 <div align="center">
   <img src="https://github.com/codefuse-ai/MFTCoder/blob/main/assets/github-codefuse-logo-update.jpg" width="50%" />
 </div>
