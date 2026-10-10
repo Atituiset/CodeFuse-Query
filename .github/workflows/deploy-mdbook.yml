@@ -1,7 +1,7 @@
-# Deploy the CodeFuse-Query mdBook documentation to GitHub Pages.
+# Deploy the CodeFuse-Query VitePress documentation to GitHub Pages.
 #
 # Triggers:
-#   - push to `main` that changes anything under `codefuse-mdbook/`
+#   - push to `main` that changes anything under `docs/`
 #   - manual run from the Actions tab
 #
 # The built site is published with the official GitHub Pages actions
@@ -9,13 +9,13 @@
 # It therefore requires the repository's Pages source to be set to "GitHub Actions".
 # See: Settings -> Pages -> Build and deployment -> Source = "GitHub Actions".
 
-name: Deploy mdBook to Pages
+name: Deploy VitePress docs to Pages
 
 on:
   push:
     branches: ["main"]
     paths:
-      - "codefuse-mdbook/**"
+      - "docs/**"
       - ".github/workflows/deploy-mdbook.yml"
   workflow_dispatch:
 
@@ -28,7 +28,7 @@ permissions:
 # Allow only one concurrent deployment, cancelling any in-progress run.
 # A distinct group name avoids colliding with the existing `pages` workflow.
 concurrency:
-  group: "mdbook-pages"
+  group: "docs-pages"
   cancel-in-progress: true
 
 jobs:
@@ -38,14 +38,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup mdBook
-        uses: peaceiris/actions-mdbook@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          mdbook-version: "0.4.52"
+          node-version: 22
 
-      - name: Build mdBook
-        run: mdbook build
-        working-directory: codefuse-mdbook
+      - name: Install dependencies
+        run: npm ci --prefix docs
+
+      - name: Build VitePress site
+        run: npm run docs:build --prefix docs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -53,7 +55,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: codefuse-mdbook/book
+          path: docs/.vitepress/dist
 
       - name: Deploy to GitHub Pages
         id: deployment

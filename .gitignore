@@ -46,5 +46,7 @@ __pycache__/
 *.pyo
 *.pyd
 
-### mdBook build output ###
-codefuse-mdbook/book/
+### VitePress build output ###
+docs/.vitepress/dist
+docs/.vitepress/cache
+docs/node_modules/
